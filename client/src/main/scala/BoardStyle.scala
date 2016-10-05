@@ -45,7 +45,10 @@ class BoardStyle(implicit r: Register) extends StyleSheet.Inline()(r) {
 
   val empty = style(point)
 
-  val black = style(point, backgroundColor(blackColor))
+  val black = style(
+    point,
+    boxShadow := "2px 2px rgba(0, 0, 0, 0.6)",
+    backgroundColor(blackColor))
 
   val white = style(
     point,

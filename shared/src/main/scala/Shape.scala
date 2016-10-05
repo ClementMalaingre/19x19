@@ -7,6 +7,7 @@ import simulacrum.typeclass
 @typeclass trait Shape[A] {
   def neighbours(a: A): Seq[A]
   def all: Seq[A]
+  def diagonals(a: A): Seq[Seq[A]]
 }
 
 object Shape {
@@ -19,6 +20,19 @@ object Shape {
             case (a, b) if a >= 1 && a <= n && b >= 1 && b <= n =>
               ap(a, b)
           }
+      }
+
+      def diagonals(a: A): Seq[Seq[A]] = {
+        val (x, y) = up(a)
+        List(
+          List.tabulate(4)(i => (x + (i + 1), y + (i + 1))),
+          List.tabulate(4)(i => (x + (i + 1), y - (i + 1))),
+          List.tabulate(4)(i => (x - (i + 1), y - (i + 1))),
+          List.tabulate(4)(i => (x - (i + 1), y + (i + 1)))
+        ).map(_.collect {
+          case (a, b) if a >= 1 && a <= n && b >= 1 && b <= n =>
+              ap(a, b)
+          })
       }
 
       def all: Seq[A] =
